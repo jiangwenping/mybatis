@@ -26,6 +26,9 @@ import java.util.Set;
 import org.apache.ibatis.reflection.ExceptionUtil;
 
 /**
+ * 自定义插件 实现Interceptor即可 ,插件只是就是一个拦截器
+ *
+ *
  * @author Clinton Begin
  */
 public class Plugin implements InvocationHandler {
