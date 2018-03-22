@@ -17,3 +17,6 @@
  * Base package for loading results into beans
  */
 package org.apache.ibatis.executor.loader;
+
+
+//动态代理  cglib  javasist jdk  asm 参考http://blog.csdn.net/luanlouis/article/details/24589193
