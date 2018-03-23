@@ -86,16 +86,20 @@ public class XMLMapperBuilder extends BaseBuilder {
     this.sqlFragments = sqlFragments;
     this.resource = resource;
   }
-
+  //如果configuration对象还没加载xml配置文件（避免重复加载，实际上是确认是否解析了mapper节点的属性及内容，
+  //为解析它的子节点如cache、sql、select、resultMap、parameterMap等做准备），
+  //则从输入流中解析mapper节点，然后再将resource的状态置为已加载
   public void parse() {
     if (!configuration.isResourceLoaded(resource)) {
       configurationElement(parser.evalNode("/mapper"));
       configuration.addLoadedResource(resource);
       bindMapperForNamespace();
     }
-
+    //解析在configurationElement函数中处理resultMap时其extends属性指向的父对象还没被处理的<resultMap>节点
     parsePendingResultMaps();
+    //解析在configurationElement函数中处理cache-ref时其指向的对象不存在的<cache>节点(如果cache-ref先于其指向的cache节点加载就会出现这种情况)
     parsePendingCacheRefs();
+    //同上，如果cache没加载的话处理statement时也会抛出异常
     parsePendingStatements();
   }
 
@@ -406,9 +410,9 @@ public class XMLMapperBuilder extends BaseBuilder {
       }
       if (boundType != null) {
         if (!configuration.hasMapper(boundType)) {
-          // Spring may not know the real resource name so we set a flag
-          // to prevent loading again this resource from the mapper interface
-          // look at MapperAnnotationBuilder#loadXmlResource
+          // Spring可能不知道真正的资源名称，所以我们设置了一个标志
+          //以防止从映射器接口再次加载此资源
+          //查看MapperAnnotationBuilder＃loadXmlResource
           configuration.addLoadedResource("namespace:" + namespace);
           configuration.addMapper(boundType);
         }

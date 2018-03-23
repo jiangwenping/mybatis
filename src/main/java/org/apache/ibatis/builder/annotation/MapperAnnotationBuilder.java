@@ -157,9 +157,9 @@ public class MapperAnnotationBuilder {
   }
 
   private void loadXmlResource() {
-    // Spring may not know the real resource name so we check a flag
-    // to prevent loading again a resource twice
-    // this flag is set at XMLMapperBuilder#bindMapperForNamespace
+    //Spring可能不知道真正的资源名称，所以我们检查一个标志
+    //防止再次加载资源两次
+    // 此标志设置在XMLMapperBuilder＃bindMapperForNamespace
     if (!configuration.isResourceLoaded("namespace:" + type.getName())) {
       String xmlResource = type.getName().replace('.', '/') + ".xml";
       InputStream inputStream = null;
@@ -282,7 +282,7 @@ public class MapperAnnotationBuilder {
     }
     return null;
   }
-
+  //1.解析接口mapper中的每个方法映射成对应的sql
   void parseStatement(Method method) {
     Class<?> parameterTypeClass = getParameterType(method);
     LanguageDriver languageDriver = getLanguageDriver(method);

@@ -56,7 +56,8 @@ public class MapperRegistry {
   public <T> boolean hasMapper(Class<T> type) {
     return knownMappers.containsKey(type);
   }
-
+  //接口和mapper的一个映射
+  //1.MapperAnnotationBuilder 解析接口上的注解以及解析mapper.xml配置文件
   public <T> void addMapper(Class<T> type) {
     if (type.isInterface()) {
       if (hasMapper(type)) {
@@ -65,9 +66,9 @@ public class MapperRegistry {
       boolean loadCompleted = false;
       try {
         knownMappers.put(type, new MapperProxyFactory<T>(type));
-        // It's important that the type is added before the parser is run
-        // otherwise the binding may automatically be attempted by the
-        // mapper parser. If the type is already known, it won't try.
+        //在解析器运行之前添加类型非常重要
+        //否则可能会自动尝试绑定
+        //mapper 解析。 如果该类型已知，则不会尝试
         MapperAnnotationBuilder parser = new MapperAnnotationBuilder(config, type);
         parser.parse();
         loadCompleted = true;
