@@ -55,6 +55,8 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
     } catch (Throwable t) {
       throw ExceptionUtil.unwrapThrowable(t);
     }
+    //执行方法时,其实是执行代理对象MapperProxy的invoke方法
+    //可以在执行sql的前后做一些处理
     final MapperMethod mapperMethod = cachedMapperMethod(method);
     return mapperMethod.execute(sqlSession, args);
   }
