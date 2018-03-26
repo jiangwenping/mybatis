@@ -347,7 +347,7 @@ public class MapperAnnotationBuilder {
       } else if (isSelect) {
         resultMapId = parseResultMap(method);
       }
-
+      //维护了一条<select|update|delete|insert>节点的封装
       assistant.addMappedStatement(
           mappedStatementId,
           sqlSource,
